@@ -2,6 +2,7 @@ import express, { Request, Response } from 'express';
 import cors from 'cors';
 import { createStripeCheckoutSession } from './checkout';
 import { createPaymentIntent } from './payments';
+import { handleStripeWebhook } from './webhook';
 import { runAsync } from './helpers';
 
 // Express app
@@ -10,8 +11,16 @@ export const app = express();
 /**
  * Middlewares
  */
-app.use(express.json());
+
+// Allows cross origin requests
 app.use(cors({ origin: true }));
+
+// Sets rawBody for webhook handling
+app.use(
+  express.json({
+    verify: (req, res, buffer) => (req['rawBody'] = buffer),
+  })
+);
 
 app.get('/', (req: Request, res: Response) => {
   res.send('Express backend server is running');
@@ -20,6 +29,8 @@ app.get('/', (req: Request, res: Response) => {
 /**
  * Checkouts
  */
+
+// Create a checkout session
 app.post(
   '/checkouts/',
   runAsync(async ({ body }: Request, res: Response) => {
@@ -38,3 +49,10 @@ app.post(
     res.send(await createPaymentIntent(body.amount));
   })
 );
+
+/**
+ * Webhooks
+ */
+
+// Handle webhooks
+app.post('/hooks', runAsync(handleStripeWebhook));
