@@ -4,6 +4,7 @@ import './App.css';
 import Home from './components/Home';
 import Checkout, { CheckoutSuccess, CheckoutFail } from './components/Checkout';
 import Payments from './components/Payments';
+import Customers from './components/Customers';
 
 const App = () => {
   return (
@@ -59,6 +60,9 @@ const App = () => {
             </Route>
             <Route path="/payments" exact>
               <Payments />
+            </Route>
+            <Route path="/customers" exact>
+              <Customers />
             </Route>
 
             <Route path="/success">
