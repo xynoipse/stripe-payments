@@ -2,17 +2,21 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { loadStripe } from '@stripe/stripe-js';
 import { Elements } from '@stripe/react-stripe-js';
-import './index.css';
-import App from './App';
+import { FirebaseAppProvider } from 'reactfire';
+import { firebaseConfig } from './services/firebase';
 import reportWebVitals from './reportWebVitals';
+import App from './App';
+import './index.css';
 
 export const stripePromise = loadStripe(process.env.REACT_APP_STRIPE_PUB_KEY);
 
 ReactDOM.render(
   <React.StrictMode>
-    <Elements stripe={stripePromise}>
-      <App />
-    </Elements>
+    <FirebaseAppProvider firebaseConfig={firebaseConfig}>
+      <Elements stripe={stripePromise}>
+        <App />
+      </Elements>
+    </FirebaseAppProvider>
   </React.StrictMode>,
   document.getElementById('root')
 );
