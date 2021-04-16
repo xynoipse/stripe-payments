@@ -1,6 +1,7 @@
 import express, { Request, Response } from 'express';
 import cors from 'cors';
 import { createStripeCheckoutSession } from './checkout';
+import { createPaymentIntent } from './payments';
 import { runAsync } from './helpers';
 
 // Express app
@@ -23,5 +24,17 @@ app.post(
   '/checkouts/',
   runAsync(async ({ body }: Request, res: Response) => {
     res.send(await createStripeCheckoutSession(body.line_items));
+  })
+);
+
+/**
+ * Payment Intents API
+ */
+
+// Create a PaymentIntent
+app.post(
+  '/payments',
+  runAsync(async ({ body }: Request, res: Response) => {
+    res.send(await createPaymentIntent(body.amount));
   })
 );
