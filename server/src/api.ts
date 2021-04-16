@@ -2,9 +2,10 @@ import express, { Request, Response } from 'express';
 import cors from 'cors';
 import { createStripeCheckoutSession } from './checkout';
 import { createPaymentIntent } from './payments';
+import { createSetupIntent, listPaymentMethods } from './customers';
 import { handleStripeWebhook } from './webhook';
 import { decodeJWT } from './middleware';
-import { runAsync } from './helpers';
+import { runAsync, validateUser } from './helpers';
 
 // Express app
 export const app = express();
@@ -51,6 +52,32 @@ app.post(
   '/payments',
   runAsync(async ({ body }: Request, res: Response) => {
     res.send(await createPaymentIntent(body.amount));
+  })
+);
+
+/**
+ * Customers and Setup Intents
+ */
+
+// Save a card on the customer record with a SetupIntent
+app.post(
+  '/wallet',
+  runAsync(async (req: Request, res: Response) => {
+    const user = validateUser(req);
+
+    const setupIntent = await createSetupIntent(user.uid);
+    res.send(setupIntent);
+  })
+);
+
+// Retrieve all cards attached to a customer
+app.get(
+  '/wallet',
+  runAsync(async (req: Request, res: Response) => {
+    const user = validateUser(req);
+
+    const wallet = await listPaymentMethods(user.uid);
+    res.send(wallet.data);
   })
 );
 
