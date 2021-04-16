@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
 import './App.css';
 import Home from './components/Home';
 import Checkout, { CheckoutSuccess, CheckoutFail } from './components/Checkout';
+import Payments from './components/Payments';
 
 const App = () => {
   return (
@@ -55,6 +56,9 @@ const App = () => {
             </Route>
             <Route path="/checkout" exact>
               <Checkout />
+            </Route>
+            <Route path="/payments" exact>
+              <Payments />
             </Route>
 
             <Route path="/success">
