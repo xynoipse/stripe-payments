@@ -2,6 +2,7 @@ import React from 'react';
 import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
 import './App.css';
 import Home from './components/Home';
+import Checkout, { CheckoutSuccess, CheckoutFail } from './components/Checkout';
 
 const App = () => {
   return (
@@ -51,6 +52,16 @@ const App = () => {
           <Switch>
             <Route path="/" exact>
               <Home />
+            </Route>
+            <Route path="/checkout" exact>
+              <Checkout />
+            </Route>
+
+            <Route path="/success">
+              <CheckoutSuccess />
+            </Route>
+            <Route path="/failed">
+              <CheckoutFail />
             </Route>
           </Switch>
         </main>
