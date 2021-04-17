@@ -1,4 +1,4 @@
-import { stripe } from './';
+import stripe from '../services/stripe';
 
 /**
  * Create a Payment Intent with a specific amount

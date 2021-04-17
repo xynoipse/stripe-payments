@@ -1,6 +1,6 @@
 import Stripe from 'stripe';
-import { stripe } from './';
-import { db } from './firebase';
+import stripe from '../services/stripe';
+import { db } from '../services/firebase';
 
 /**
  * Creates a SetupIntent used to save a credit card for later use

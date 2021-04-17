@@ -1,5 +1,5 @@
-import { stripe } from './';
 import Stripe from 'stripe';
+import stripe from '../services/stripe';
 
 /**
  * Creates a Stripe Checkout session with line items
