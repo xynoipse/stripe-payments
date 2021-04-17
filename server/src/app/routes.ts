@@ -2,6 +2,7 @@ import { Express, Request, Response } from 'express';
 import checkouts from '../routes/checkouts';
 import payments from '../routes/payments';
 import customers from '../routes/customers';
+import billing from '../routes/billing';
 import webhook from '../routes/webhook';
 
 const routes = (app: Express) => {
@@ -14,6 +15,7 @@ const routes = (app: Express) => {
   app.use('/checkouts', checkouts);
   app.use('/payments', payments);
   app.use('/wallet', customers);
+  app.use('/subscriptions', billing);
   app.use('/hooks', webhook);
 };
 
