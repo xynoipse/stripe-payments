@@ -5,6 +5,7 @@ import Home from './components/Home';
 import Checkout, { CheckoutSuccess, CheckoutFail } from './components/Checkout';
 import Payments from './components/Payments';
 import Customers from './components/Customers';
+import Subscriptions from './components/Subscriptions';
 
 const App = () => {
   return (
@@ -63,6 +64,9 @@ const App = () => {
             </Route>
             <Route path="/customers" exact>
               <Customers />
+            </Route>
+            <Route path="/subscriptions" exact>
+              <Subscriptions />
             </Route>
 
             <Route path="/success">
